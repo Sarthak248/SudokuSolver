@@ -4,7 +4,7 @@ from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
-
+import time
 # Global variables
 number_of_games = int(input("Chosen Difficulty is Evil\nHow many games do you want to be played:"))
 total_times = []
@@ -44,9 +44,13 @@ def get_string():
 
 # Function to show the timer as the puzzle is being solved
 def show_time():
+    time.sleep(1)
     driver.find_element(By.NAME, "showopts").click()
+    time.sleep(1)
     driver.find_element(By.NAME, "options1").click()
+    time.sleep(1)
     driver.find_element(By.NAME, "saveopts").click()
+    time.sleep(1)
 
 
 # Once the puzzle has been solved using the algorithm, this function displays it on the browser using Selenium
@@ -66,6 +70,7 @@ def output(solved_sudoku_string):
         i = i + 1
     time_taken = driver.find_element(By.NAME, "jstimer")
     total_times.append(time_taken.get_attribute('value'))
+    time.sleep(3)
     my_element.send_keys(Keys.RETURN)
 
 # **************************************
@@ -179,10 +184,12 @@ show_time()
 my_ctr = 0
 # User has option to run the game multiple times
 while my_ctr < number_of_games:
+    if my_ctr != 0:
+        driver.find_element(By.NAME, "newgame").click()
+        time.sleep(1)
     call_all_functions()
-    driver.find_element(By.NAME, "newgame").click()
     my_ctr = my_ctr + 1
-
+time.sleep(2)
 driver.close()
 
 # Displays efficiency of the algorithm and the program by showing average time taken to solve the puzzle on EVIL mode
@@ -190,5 +197,6 @@ sum_of_times = 0
 for x in total_times:
     sum_of_times = sum_of_times + int(x)
 
-avg_time = sum_of_times / number_of_games
+# 3 time.sleep(1) functions in show_time()
+avg_time = sum_of_times / number_of_games - 3
 print("The average time to solve the puzzles was:", avg_time, " seconds")
