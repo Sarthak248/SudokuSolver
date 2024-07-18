@@ -11,6 +11,7 @@ total_times = []
 
 # Using Webdriver to open the sudoku link
 global driver
+# Config this to use env variables
 driver = webdriver.Chrome(executable_path="C:/softwares/chromedriver_win32/chromedriver.exe")
 link = 'https://grid.websudoku.com/?level=4'
 driver.get(link)
